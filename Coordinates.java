@@ -1,4 +1,3 @@
-package battleship;
 
 public class Coordinates {
     private char row;
@@ -17,7 +16,7 @@ public class Coordinates {
         this.col = col;
     }
 
-    public boolean checkCoordinates(Coordinates x) {
+    public boolean checkCoordinates(char row, int column) {
      return false;
     }
 }

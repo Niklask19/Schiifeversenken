@@ -1,4 +1,3 @@
-package battleship;
 
 public class Grid {
     private String[][] grid;
