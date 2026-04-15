@@ -17,6 +17,21 @@ public class Coordinates {
     }
 
     public boolean checkCoordinates(char row, int column) {
-     return false;
+
+        if(column > 10) {
+            return false;
+        }
+        String forbiddenLetters = "KLMNOPQRSTUVWXYZ";
+
+        for (int i = 0; i < forbiddenLetters.length(); i++) {
+            if (row == forbiddenLetters.charAt(i)) {
+                return false;
+            }
+        }
+
+
+
+
+        return true;
     }
 }

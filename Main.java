@@ -6,7 +6,6 @@ public class Main {
         grid1.printGrid();
 
         String input = Menu.menu();
-        Menu.checkInput(input);
         Coordinates[] coordinatesObjArr = Menu.splitCoordinates(input);
 
     }
