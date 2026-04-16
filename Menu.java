@@ -44,7 +44,17 @@ public class Menu {
 
     public static void outputLengthAndParts(Coordinates[] cArray) {
         int length = cArray[0].getLength(cArray[1]);
-        System.out.println("Length: " + length);
+
+        if(!(length > 5)) {
+            System.out.println("Length: " + length);
+            String parts = cArray[0].getParts(cArray[1]);
+            System.out.println("Parts: " + parts);
+        } else {
+            System.out.println("Error!");
+        }
+
+
+
     }
 
 }
