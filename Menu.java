@@ -7,13 +7,13 @@ public class Menu {
 
         gridObjArr[0].printGrid();
         System.out.println("Enter the coordinates of the Aircraft Carrier (5 cells):");
-        inputMenu(coordinatesObjArr, shipsObjArr);
-
+        inputMenu(coordinatesObjArr, shipsObjArr, gridObjArr);
+        gridObjArr[0].printGrid();
 
 
     }
 
-    public static void inputMenu(Coordinates[] coordinatesObjArr,Ships[] shipsObjArr) {
+    public static void inputMenu(Coordinates[] coordinatesObjArr,Ships[] shipsObjArr, Grid[] gridObjArr) {
         Scanner sc = new Scanner(System.in);
         int index = 0;
         while (true) {
@@ -30,6 +30,7 @@ public class Menu {
                 continue;
             }
 
+            gridObjArr[0].placeCoordinates(coordinatesObjArr);
             index++;
             break;
         }

@@ -130,4 +130,12 @@ public class Coordinates {
 
         return sb.toString();
     }
+
+    public int getCol() {
+        return col;
+    }
+
+    public char getRow() {
+        return row;
+    }
 }
