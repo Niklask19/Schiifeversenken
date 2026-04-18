@@ -53,7 +53,7 @@ public class Grid {
         }
     }
 
-    public void placeCoordinates(Coordinates[] cArray) {
+    public boolean placeOnGrid(Coordinates[] cArray) {
         int numRow = changeLetterToNum(cArray);
 
         if (cArray[0].getRow() == cArray[1].getRow()) {
@@ -61,7 +61,11 @@ public class Grid {
             if (cArray[0].getCol() > cArray[1].getCol()) {
                 int temp = cArray[0].getCol();
                 while (temp >= cArray[1].getCol()) {
+                    if(this.grid[numRow][temp].equals("0")) {
+                        return false;
+                    }
                     this.grid[numRow][temp] = "0";
+                    //shipsCoords!!!!!!!!!!!!!!!
                     temp--;
                 }
             }
@@ -69,6 +73,9 @@ public class Grid {
             if (cArray[0].getCol() < cArray[1].getCol()) {
                 int temp = cArray[0].getCol();
                 while (temp <= cArray[1].getCol()) {
+                    if(this.grid[numRow][temp].equals("0")) {
+                        return false;
+                    }
                     this.grid[numRow][temp] = "0";
                     temp++;
                 }
@@ -82,6 +89,9 @@ public class Grid {
             if (cArray[0].getRow() > cArray[1].getRow()) {
                 int count = 0;
                 while (count < cArray[0].getLength(cArray[1])) {
+                    if(this.grid[tempNumRow][numCol].equals("0")) {
+                        return false;
+                    }
                     this.grid[tempNumRow][numCol] = "0";
                     tempNumRow--;
                     count++;
@@ -91,12 +101,16 @@ public class Grid {
             if (cArray[0].getRow() < cArray[1].getRow()) {
                 int count = 0;
                 while (count < cArray[0].getLength(cArray[1])) {
+                    if(this.grid[tempNumRow][numCol].equals("0")) {
+                        return false;
+                    }
                     this.grid[tempNumRow][numCol] = "0";
                     tempNumRow++;
                     count++;
                 }
             }
         }
+        return true;
     }
 
     public static int changeLetterToNum(Coordinates[] cArray) {

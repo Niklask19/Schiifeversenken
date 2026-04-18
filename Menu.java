@@ -2,6 +2,8 @@
 import java.util.Scanner;
 
 public class Menu {
+    private static int index = 0;
+
     public static void menu(Coordinates[] coordinatesObjArr, Grid[] gridObjArr, Ships[] shipsObjArr) {
 
 
@@ -15,7 +17,7 @@ public class Menu {
 
     public static void inputMenu(Coordinates[] coordinatesObjArr,Ships[] shipsObjArr, Grid[] gridObjArr) {
         Scanner sc = new Scanner(System.in);
-        int index = 0;
+
         while (true) {
             String coordinates = sc.nextLine();
             boolean con1 = splitCoordinates(coordinates, coordinatesObjArr);
@@ -30,7 +32,8 @@ public class Menu {
                 continue;
             }
 
-            gridObjArr[0].placeCoordinates(coordinatesObjArr);
+            shipsObjArr[index].setCoordinatesIntoShipField(coordinatesObjArr[0].getParts(coordinatesObjArr[1]));
+            gridObjArr[0].placeOnGrid(coordinatesObjArr);
             index++;
             break;
         }

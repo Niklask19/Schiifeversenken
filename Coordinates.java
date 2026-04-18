@@ -125,9 +125,6 @@ public class Coordinates {
                 }
             }
         }
-
-
-
         return sb.toString();
     }
 
