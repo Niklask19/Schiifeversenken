@@ -2,25 +2,32 @@
 import java.util.Scanner;
 
 public class Menu {
-    private static int index = 0;
+    protected static int index = 0;
+    private static int countForSetShipsMenu = 0;
 
     public static void menu(Coordinates[] coordinatesObjArr, Grid[] gridObjArr, Ships[] shipsObjArr) {
 
-
-        gridObjArr[0].printGrid();
-        System.out.println("Enter the coordinates of the Aircraft Carrier (5 cells):");
-        inputMenu(coordinatesObjArr, shipsObjArr, gridObjArr);
-        gridObjArr[0].printGrid();
+        while (true) {
+            gridObjArr[0].printGrid();
+            System.out.println("Enter the coordinates of the " + returnShipNamesForOutput());
+            inputMenu(coordinatesObjArr, shipsObjArr, gridObjArr);
+            if (index == 5) { /*index 5 although array only has length 5, is because even
+                                if last operation is executed the index-field still gets incremented
+                                 */
+                gridObjArr[0].printGrid();
+                break;
+            }
+        }
 
 
     }
 
-    public static void inputMenu(Coordinates[] coordinatesObjArr,Ships[] shipsObjArr, Grid[] gridObjArr) {
+    public static void inputMenu(Coordinates[] coordinatesObjArr, Ships[] shipsObjArr, Grid[] gridObjArr) {
         Scanner sc = new Scanner(System.in);
 
         while (true) {
             String coordinates = sc.nextLine();
-            boolean con1 = splitCoordinates(coordinates, coordinatesObjArr);
+            boolean con1 = splitCoordinates(coordinates, coordinatesObjArr); //values set for coordinates objects fields via this method
             if (!con1) {
                 System.out.println("Error! Wrong ship location! Try again:");
                 continue;
@@ -33,7 +40,11 @@ public class Menu {
             }
 
             shipsObjArr[index].setCoordinatesIntoShipField(coordinatesObjArr[0].getParts(coordinatesObjArr[1]));
-            gridObjArr[0].placeOnGrid(coordinatesObjArr);
+            boolean con3 = gridObjArr[0].placeOnGrid(coordinatesObjArr, shipsObjArr);
+            if(!con3) {
+                System.out.println("Error! Cell is already occupied! Try again:");
+                continue;
+            }
             index++;
             break;
         }
@@ -69,5 +80,26 @@ public class Menu {
         }
 
         return true;
+    }
+
+    private static String returnShipNamesForOutput() {
+        countForSetShipsMenu++;
+
+        if (countForSetShipsMenu == 1) {
+            return "Aircraft Carrier (5 cells):";
+        }
+        if (countForSetShipsMenu == 2) {
+            return "Battleship (4 cells):";
+        }
+        if (countForSetShipsMenu == 3) {
+            return "Submarine (3 cells):";
+        }
+        if (countForSetShipsMenu == 4) {
+            return "Cruiser (3 cells):";
+        }
+        if (countForSetShipsMenu == 5) {
+            return "Destroyer (2 cells):";
+        }
+        return null;
     }
 }

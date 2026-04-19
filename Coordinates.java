@@ -34,6 +34,28 @@ public class Coordinates {
         return true;
     }
 
+    public boolean checkNearbyShips(int row, int col, Grid[] grids) {
+        Grid grid1 = grids[0];
+        String[][] tempGrid = grid1.getGrid();
+        Grid grid2 = grids[1];
+
+        for (int i = row - 1; i <= row + 1; i++) {
+            for (int j = col - 1; j <= col + 1; j++) {
+
+                if (i >= 1 && i <= 10 && j >= 1 && j <= 10) {
+
+                    if (tempGrid[i][j].equals("0")) {
+                        return false;
+                    }
+
+                }
+
+            }
+        }
+
+        return true;
+    }
+
     public boolean sortOutDiagonals(Coordinates x) {
         if (this.row != x.row && this.col != x.col) {
             this.col = 0;
@@ -90,7 +112,7 @@ public class Coordinates {
 
         if (this.row == x.row) {
 
-            if(this.col > x.col) {
+            if (this.col > x.col) {
                 int temp = this.col;
                 while (temp > x.col) {
                     temp--;
@@ -98,7 +120,7 @@ public class Coordinates {
                 }
             }
 
-            if(this.col < x.col) {
+            if (this.col < x.col) {
                 int temp = this.col;
                 while (temp < x.col) {
                     temp++;
@@ -107,19 +129,19 @@ public class Coordinates {
             }
         }
 
-        if(this.col == x.col) {
+        if (this.col == x.col) {
 
-            if(this.row > x.row) {
+            if (this.row > x.row) {
                 char temp = this.row;
-                while(temp > x.row) {
+                while (temp > x.row) {
                     temp--;
                     sb.append(temp).append(this.col).append(" ");
                 }
             }
 
-            if(this.row < x.row) {
+            if (this.row < x.row) {
                 char temp = this.row;
-                while(temp < x.row) {
+                while (temp < x.row) {
                     temp++;
                     sb.append(temp).append(this.col).append(" ");
                 }
