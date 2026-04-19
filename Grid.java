@@ -1,10 +1,12 @@
 
 public class Grid {
     private String[][] grid;
+    private int countShipsOnGridIndex;
 
     public Grid() {
         this.grid = new String[11][11];
         createGrid();
+        this.countShipsOnGridIndex = 0;
     }
 
     public String[][] getGrid() {
@@ -53,95 +55,143 @@ public class Grid {
         }
     }
 
-    public boolean placeOnGrid(Coordinates[] cArray) {
-        int numRow = changeLetterToNum(cArray);
+    public boolean placeOnGrid(Coordinates[] cArray, Ships[] ship) {
+
+        int numRow = changeLetterToNum(cArray[0]);
 
         if (cArray[0].getRow() == cArray[1].getRow()) {
 
-            if (cArray[0].getCol() > cArray[1].getCol()) {
-                int temp = cArray[0].getCol();
-                while (temp >= cArray[1].getCol()) {
-                    if(this.grid[numRow][temp].equals("0")) {
-                        return false;
-                    }
-                    this.grid[numRow][temp] = "0";
-                    //shipsCoords!!!!!!!!!!!!!!!
-                    temp--;
+            ship[this.countShipsOnGridIndex].setHorizontal(true);
+
+            int start = Math.min(cArray[0].getCol(), cArray[1].getCol());
+            int end = Math.max(cArray[0].getCol(), cArray[1].getCol());
+
+            int temp = start;
+            while (temp <= end) {
+
+                if (this.grid[numRow][temp].equals("0")) {
+                    return false;
                 }
+
+                if (!cArray[0].checkNearbyShips(numRow, temp, new Grid[]{this, this})) {
+                    return false;
+                }
+
+                temp++;
             }
 
-            if (cArray[0].getCol() < cArray[1].getCol()) {
-                int temp = cArray[0].getCol();
-                while (temp <= cArray[1].getCol()) {
-                    if(this.grid[numRow][temp].equals("0")) {
-                        return false;
-                    }
-                    this.grid[numRow][temp] = "0";
-                    temp++;
-                }
+            temp = start;
+            while (temp <= end) {
+
+                this.grid[numRow][temp] = "0";
+                ship[this.countShipsOnGridIndex].setNumCords(numRow, temp);
+
+                temp++;
             }
+
+            this.countShipsOnGridIndex++;
         }
 
         if (cArray[0].getCol() == cArray[1].getCol()) {
+
+            ship[this.countShipsOnGridIndex].setHorizontal(false);
+
             int numCol = cArray[0].getCol();
+
+            int start = Math.min(
+                    changeLetterToNum(new Coordinates(){{
+                        setRow(cArray[0].getRow());
+                    }}),
+                    changeLetterToNum(new Coordinates(){{
+                        setRow(cArray[1].getRow());
+                    }})
+            );
+
+            int end = Math.max(
+                    changeLetterToNum(new Coordinates(){{
+                        setRow(cArray[0].getRow());
+                    }}),
+                    changeLetterToNum(new Coordinates(){{
+                        setRow(cArray[1].getRow());
+                    }})
+            );
+
+
             int tempNumRow = numRow;
 
-            if (cArray[0].getRow() > cArray[1].getRow()) {
-                int count = 0;
-                while (count < cArray[0].getLength(cArray[1])) {
-                    if(this.grid[tempNumRow][numCol].equals("0")) {
-                        return false;
-                    }
-                    this.grid[tempNumRow][numCol] = "0";
-                    tempNumRow--;
-                    count++;
+            int count = 0;
+            while (count < cArray[0].getLength(cArray[1])) {
+
+                if (this.grid[tempNumRow][numCol].equals("0")) {
+                    return false;
                 }
+
+                if (!cArray[0].checkNearbyShips(tempNumRow, numCol, new Grid[]{this, this})) {
+                    return false;
+                }
+
+                if (cArray[0].getRow() < cArray[1].getRow()) {
+                    tempNumRow++;
+                } else {
+                    tempNumRow--;
+                }
+
+                count++;
             }
 
-            if (cArray[0].getRow() < cArray[1].getRow()) {
-                int count = 0;
-                while (count < cArray[0].getLength(cArray[1])) {
-                    if(this.grid[tempNumRow][numCol].equals("0")) {
-                        return false;
-                    }
-                    this.grid[tempNumRow][numCol] = "0";
+
+            tempNumRow = numRow;
+            count = 0;
+
+            while (count < cArray[0].getLength(cArray[1])) {
+
+                this.grid[tempNumRow][numCol] = "0";
+                ship[this.countShipsOnGridIndex].setNumCords(tempNumRow, numCol);
+
+                if (cArray[0].getRow() < cArray[1].getRow()) {
                     tempNumRow++;
-                    count++;
+                } else {
+                    tempNumRow--;
                 }
+
+                count++;
             }
+
+            this.countShipsOnGridIndex++;
         }
+
         return true;
     }
 
-    public static int changeLetterToNum(Coordinates[] cArray) {
-        if (cArray[0].getRow() == 'A') {
+    public static int changeLetterToNum(Coordinates c) {
+        if (c.getRow() == 'A') {
             return 1;
         }
-        if (cArray[0].getRow() == 'B') {
+        if (c.getRow() == 'B') {
             return 2;
         }
-        if (cArray[0].getRow() == 'C') {
+        if (c.getRow() == 'C') {
             return 3;
         }
-        if (cArray[0].getRow() == 'D') {
+        if (c.getRow() == 'D') {
             return 4;
         }
-        if (cArray[0].getRow() == 'E') {
+        if (c.getRow() == 'E') {
             return 5;
         }
-        if (cArray[0].getRow() == 'F') {
+        if (c.getRow() == 'F') {
             return 6;
         }
-        if (cArray[0].getRow() == 'G') {
+        if (c.getRow() == 'G') {
             return 7;
         }
-        if (cArray[0].getRow() == 'H') {
+        if (c.getRow() == 'H') {
             return 8;
         }
-        if (cArray[0].getRow() == 'I') {
+        if (c.getRow() == 'I') {
             return 9;
         }
-        if (cArray[0].getRow() == 'J') {
+        if (c.getRow() == 'J') {
             return 10;
         }
         return 0;
