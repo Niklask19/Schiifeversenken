@@ -55,18 +55,16 @@ public class Grid {
         }
     }
 
-    public boolean placeOnGrid(Coordinates[] cArray) {
-        int numRow = changeLetterToNum(cArray);
+    public void placeOnGrid(Coordinates[] cArray) {
+        int numRow = changeLetterToNum(cArray[0]);
 
         if (cArray[0].getRow() == cArray[1].getRow()) {
 
             if (cArray[0].getCol() > cArray[1].getCol()) {
                 int temp = cArray[0].getCol();
                 while (temp >= cArray[1].getCol()) {
-                    if(this.grid[numRow][temp].equals("0")) {
-                        return false;
-                    }
-                    this.grid[numRow][temp] = "0";
+
+                    this.grid[numRow][temp] = "O";
 
                     temp--;
                 }
@@ -75,10 +73,8 @@ public class Grid {
             if (cArray[0].getCol() < cArray[1].getCol()) {
                 int temp = cArray[0].getCol();
                 while (temp <= cArray[1].getCol()) {
-                    if(this.grid[numRow][temp].equals("0")) {
-                        return false;
-                    }
-                    this.grid[numRow][temp] = "0";
+
+                    this.grid[numRow][temp] = "O";
                     temp++;
                 }
             }
@@ -91,10 +87,8 @@ public class Grid {
             if (cArray[0].getRow() > cArray[1].getRow()) {
                 int count = 0;
                 while (count < cArray[0].getLength(cArray[1])) {
-                    if(this.grid[tempNumRow][numCol].equals("0")) {
-                        return false;
-                    }
-                    this.grid[tempNumRow][numCol] = "0";
+
+                    this.grid[tempNumRow][numCol] = "O";
                     tempNumRow--;
                     count++;
                 }
@@ -103,47 +97,92 @@ public class Grid {
             if (cArray[0].getRow() < cArray[1].getRow()) {
                 int count = 0;
                 while (count < cArray[0].getLength(cArray[1])) {
-                    if(this.grid[tempNumRow][numCol].equals("0")) {
-                        return false;
-                    }
-                    this.grid[tempNumRow][numCol] = "0";
+
+                    this.grid[tempNumRow][numCol] = "O";
                     tempNumRow++;
                     count++;
                 }
             }
         }
+
+    }
+
+    public boolean checkIfShipNearBy(Coordinates[] cArray, Ships[] ship) {
+        if(cArray[0].getRow() == cArray[1].getRow()) {
+            int tempRow = changeLetterToNum(cArray[0]);
+            int tempCol = Math.min(cArray[0].getCol(), cArray[1].getCol());
+            int count = 0;
+
+           while(count < ship[Menu.index].getLength()) {
+               for(int i = tempRow - 1; i <= tempRow + 1; i++) {
+                   for(int j = tempCol - 1; j <= tempCol + 1; j++ ) {
+                       if(i >= 1 && i <= 10 && j >= 1 && j <= 10) {
+                           if(this.grid[i][j].equals("O")) {
+                               return false;
+                           }
+                       }
+                   }
+               }
+               tempCol++;
+               count++;
+           }
+        }
+
+        if(cArray[0].getCol() == cArray[1].getCol()) {
+            int tempCol = cArray[0].getCol();
+            int c1 = changeLetterToNum(cArray[0]);
+            int c2 = changeLetterToNum(cArray[1]);
+            int tempRow = Math.min(c1,c2);
+            int count = 0;
+
+            while(count < ship[Menu.index].getLength()) {
+                for(int i = tempRow - 1; i <= tempRow + 1; i++) {
+                    for(int j = tempCol - 1; j <= tempCol + 1; j++ ) {
+                        if(i >= 1 && i <= 10 && j >= 1 && j <= 10) {
+                            if(this.grid[i][j].equals("O")) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+                tempRow++;
+                count++;
+            }
+
+        }
+
         return true;
     }
 
-    public static int changeLetterToNum(Coordinates[] c) {
-        if (c[0].getRow() == 'A') {
+    public static int changeLetterToNum(Coordinates c) {
+        if (c.getRow() == 'A') {
             return 1;
         }
-        if (c[0].getRow() == 'B') {
+        if (c.getRow() == 'B') {
             return 2;
         }
-        if (c[0].getRow() == 'C') {
+        if (c.getRow() == 'C') {
             return 3;
         }
-        if (c[0].getRow() == 'D') {
+        if (c.getRow() == 'D') {
             return 4;
         }
-        if (c[0].getRow() == 'E') {
+        if (c.getRow() == 'E') {
             return 5;
         }
-        if (c[0].getRow() == 'F') {
+        if (c.getRow() == 'F') {
             return 6;
         }
-        if (c[0].getRow() == 'G') {
+        if (c.getRow() == 'G') {
             return 7;
         }
-        if (c[0].getRow() == 'H') {
+        if (c.getRow() == 'H') {
             return 8;
         }
-        if (c[0].getRow() == 'I') {
+        if (c.getRow() == 'I') {
             return 9;
         }
-        if (c[0].getRow() == 'J') {
+        if (c.getRow() == 'J') {
             return 10;
         }
         return 0;
