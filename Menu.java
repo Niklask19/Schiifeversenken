@@ -13,13 +13,14 @@ public class Menu {
                 gridObjArr[0].printGrid();
             }
         }
+        Gameplay.gameplay(gridObjArr, coordinatesObjArr);
     }
 
     public static boolean inputMenu(Coordinates[] coordinatesObjArr, Ships[] shipsObjArr, Grid[] gridObjArr) {
-        Scanner sc = new Scanner(System.in);
+        Scanner sc1 = new Scanner(System.in);
 
         while (true) {
-            String coordinates = sc.nextLine();
+            String coordinates = sc1.nextLine();
             boolean con1 = splitCoordinates(coordinates, coordinatesObjArr); //values set for coordinates objects fields via this method
             if (!con1) {
                 System.out.println("Error! Wrong ship location! Try again:");
