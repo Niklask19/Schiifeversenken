@@ -154,6 +154,19 @@ public class Grid {
         return true;
     }
 
+    public boolean shoot(Coordinates c) {
+        int row = changeLetterToNum(c);
+        int col = c.getCol();
+
+        if(this.grid[row][col].equals("O")) {
+            this.grid[row][col] = "X";
+            return true;
+        }
+
+        this.grid[row][col] = "M";
+        return false;
+    }
+
     public static int changeLetterToNum(Coordinates c) {
         if (c.getRow() == 'A') {
             return 1;
