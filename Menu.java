@@ -6,15 +6,17 @@ public class Menu {
     private static int countForSetShipsMenu = 0;
 
     public static void menu(Coordinates[] coordinatesObjArr, Grid[] gridObjArr, Ships[] shipsObjArr) {
-
+        gridObjArr[0].printGrid();
         while (true) {
-            gridObjArr[0].printGrid();
             System.out.println("Enter the coordinates of the " + returnShipNamesForOutput());
             inputMenu(coordinatesObjArr, shipsObjArr, gridObjArr);
+            if(inputMenu(coordinatesObjArr, shipsObjArr, gridObjArr)) {
+                gridObjArr[0].printGrid();
+            }
             if (index == 5) { /*index 5 although array only has length 5, is because even
                                 if last operation is executed the index-field still gets incremented
                                  */
-                gridObjArr[0].printGrid();
+
                 break;
             }
         }
@@ -22,7 +24,7 @@ public class Menu {
 
     }
 
-    public static void inputMenu(Coordinates[] coordinatesObjArr, Ships[] shipsObjArr, Grid[] gridObjArr) {
+    public static boolean inputMenu(Coordinates[] coordinatesObjArr, Ships[] shipsObjArr, Grid[] gridObjArr) {
         Scanner sc = new Scanner(System.in);
 
         while (true) {
@@ -40,14 +42,15 @@ public class Menu {
             }
 
             shipsObjArr[index].setCoordinatesIntoShipField(coordinatesObjArr[0].getParts(coordinatesObjArr[1]));
-            boolean con3 = gridObjArr[0].placeOnGrid(coordinatesObjArr, shipsObjArr);
-            if(!con3) {
-                System.out.println("Error! Cell is already occupied! Try again:");
+            boolean con3 = gridObjArr[0].placeOnGrid(coordinatesObjArr);
+            if (!con3) {
+                System.out.println("Error! You placed it too close to another one. Try again:");
                 continue;
             }
             index++;
             break;
         }
+        return true;
     }
 
     public static boolean splitCoordinates(String coordinates, Coordinates[] cArray) {

@@ -44,7 +44,7 @@ public class Coordinates {
 
                 if (i >= 1 && i <= 10 && j >= 1 && j <= 10) {
 
-                    if (tempGrid[i][j].equals("0")) {
+                    if (tempGrid[i][j].equals("O")) {
                         return false;
                     }
 

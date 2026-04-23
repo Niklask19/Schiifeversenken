@@ -55,143 +55,95 @@ public class Grid {
         }
     }
 
-    public boolean placeOnGrid(Coordinates[] cArray, Ships[] ship) {
-
-        int numRow = changeLetterToNum(cArray[0]);
+    public boolean placeOnGrid(Coordinates[] cArray) {
+        int numRow = changeLetterToNum(cArray);
 
         if (cArray[0].getRow() == cArray[1].getRow()) {
 
-            ship[this.countShipsOnGridIndex].setHorizontal(true);
+            if (cArray[0].getCol() > cArray[1].getCol()) {
+                int temp = cArray[0].getCol();
+                while (temp >= cArray[1].getCol()) {
+                    if(this.grid[numRow][temp].equals("0")) {
+                        return false;
+                    }
+                    this.grid[numRow][temp] = "0";
 
-            int start = Math.min(cArray[0].getCol(), cArray[1].getCol());
-            int end = Math.max(cArray[0].getCol(), cArray[1].getCol());
-
-            int temp = start;
-            while (temp <= end) {
-
-                if (this.grid[numRow][temp].equals("0")) {
-                    return false;
+                    temp--;
                 }
-
-                if (!cArray[0].checkNearbyShips(numRow, temp, new Grid[]{this, this})) {
-                    return false;
-                }
-
-                temp++;
             }
 
-            temp = start;
-            while (temp <= end) {
-
-                this.grid[numRow][temp] = "0";
-                ship[this.countShipsOnGridIndex].setNumCords(numRow, temp);
-
-                temp++;
+            if (cArray[0].getCol() < cArray[1].getCol()) {
+                int temp = cArray[0].getCol();
+                while (temp <= cArray[1].getCol()) {
+                    if(this.grid[numRow][temp].equals("0")) {
+                        return false;
+                    }
+                    this.grid[numRow][temp] = "0";
+                    temp++;
+                }
             }
-
-            this.countShipsOnGridIndex++;
         }
 
         if (cArray[0].getCol() == cArray[1].getCol()) {
-
-            ship[this.countShipsOnGridIndex].setHorizontal(false);
-
             int numCol = cArray[0].getCol();
-
-            int start = Math.min(
-                    changeLetterToNum(new Coordinates(){{
-                        setRow(cArray[0].getRow());
-                    }}),
-                    changeLetterToNum(new Coordinates(){{
-                        setRow(cArray[1].getRow());
-                    }})
-            );
-
-            int end = Math.max(
-                    changeLetterToNum(new Coordinates(){{
-                        setRow(cArray[0].getRow());
-                    }}),
-                    changeLetterToNum(new Coordinates(){{
-                        setRow(cArray[1].getRow());
-                    }})
-            );
-
-
             int tempNumRow = numRow;
 
-            int count = 0;
-            while (count < cArray[0].getLength(cArray[1])) {
-
-                if (this.grid[tempNumRow][numCol].equals("0")) {
-                    return false;
-                }
-
-                if (!cArray[0].checkNearbyShips(tempNumRow, numCol, new Grid[]{this, this})) {
-                    return false;
-                }
-
-                if (cArray[0].getRow() < cArray[1].getRow()) {
-                    tempNumRow++;
-                } else {
+            if (cArray[0].getRow() > cArray[1].getRow()) {
+                int count = 0;
+                while (count < cArray[0].getLength(cArray[1])) {
+                    if(this.grid[tempNumRow][numCol].equals("0")) {
+                        return false;
+                    }
+                    this.grid[tempNumRow][numCol] = "0";
                     tempNumRow--;
+                    count++;
                 }
-
-                count++;
             }
 
-
-            tempNumRow = numRow;
-            count = 0;
-
-            while (count < cArray[0].getLength(cArray[1])) {
-
-                this.grid[tempNumRow][numCol] = "0";
-                ship[this.countShipsOnGridIndex].setNumCords(tempNumRow, numCol);
-
-                if (cArray[0].getRow() < cArray[1].getRow()) {
+            if (cArray[0].getRow() < cArray[1].getRow()) {
+                int count = 0;
+                while (count < cArray[0].getLength(cArray[1])) {
+                    if(this.grid[tempNumRow][numCol].equals("0")) {
+                        return false;
+                    }
+                    this.grid[tempNumRow][numCol] = "0";
                     tempNumRow++;
-                } else {
-                    tempNumRow--;
+                    count++;
                 }
-
-                count++;
             }
-
-            this.countShipsOnGridIndex++;
         }
-
         return true;
     }
 
-    public static int changeLetterToNum(Coordinates c) {
-        if (c.getRow() == 'A') {
+    public static int changeLetterToNum(Coordinates[] c) {
+        if (c[0].getRow() == 'A') {
             return 1;
         }
-        if (c.getRow() == 'B') {
+        if (c[0].getRow() == 'B') {
             return 2;
         }
-        if (c.getRow() == 'C') {
+        if (c[0].getRow() == 'C') {
             return 3;
         }
-        if (c.getRow() == 'D') {
+        if (c[0].getRow() == 'D') {
             return 4;
         }
-        if (c.getRow() == 'E') {
+        if (c[0].getRow() == 'E') {
             return 5;
         }
-        if (c.getRow() == 'F') {
+        if (c[0].getRow() == 'F') {
             return 6;
         }
-        if (c.getRow() == 'G') {
+        if (c[0].getRow() == 'G') {
             return 7;
         }
-        if (c.getRow() == 'H') {
+        if (c[0].getRow() == 'H') {
             return 8;
         }
-        if (c.getRow() == 'I') {
+        if (c[0].getRow() == 'I') {
             return 9;
         }
-        if (c.getRow() == 'J') {
+        if (c[0].getRow() == 'J') {
             return 10;
         }
         return 0;
