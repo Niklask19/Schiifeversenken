@@ -7,21 +7,12 @@ public class Menu {
 
     public static void menu(Coordinates[] coordinatesObjArr, Grid[] gridObjArr, Ships[] shipsObjArr) {
         gridObjArr[0].printGrid();
-        while (true) {
+        while (index < 5) {
             System.out.println("Enter the coordinates of the " + returnShipNamesForOutput());
-            inputMenu(coordinatesObjArr, shipsObjArr, gridObjArr);
-            if(inputMenu(coordinatesObjArr, shipsObjArr, gridObjArr)) {
+            if (inputMenu(coordinatesObjArr, shipsObjArr, gridObjArr)) {
                 gridObjArr[0].printGrid();
             }
-            if (index == 5) { /*index 5 although array only has length 5, is because even
-                                if last operation is executed the index-field still gets incremented
-                                 */
-
-                break;
-            }
         }
-
-
     }
 
     public static boolean inputMenu(Coordinates[] coordinatesObjArr, Ships[] shipsObjArr, Grid[] gridObjArr) {
@@ -41,12 +32,13 @@ public class Menu {
                 continue;
             }
 
-            shipsObjArr[index].setCoordinatesIntoShipField(coordinatesObjArr[0].getParts(coordinatesObjArr[1]));
-            boolean con3 = gridObjArr[0].placeOnGrid(coordinatesObjArr);
+            boolean con3 = gridObjArr[0].checkIfShipNearBy(coordinatesObjArr, shipsObjArr);
             if (!con3) {
                 System.out.println("Error! You placed it too close to another one. Try again:");
                 continue;
             }
+            shipsObjArr[index].setCoordinatesIntoShipField(coordinatesObjArr[0].getParts(coordinatesObjArr[1]));
+            gridObjArr[0].placeOnGrid(coordinatesObjArr);
             index++;
             break;
         }
