@@ -5,7 +5,7 @@ public class Gameplay {
     public static void gameplay(Grid[] grid, Coordinates[] c) {
         Scanner sc2 = new Scanner(System.in);
         System.out.println("\nThe game starts!\n");
-        grid[0].printGrid();
+        grid[0].printGrid(true);
         System.out.println("\nTake a shot!\n");
 
         while (true) {
@@ -18,7 +18,7 @@ public class Gameplay {
         }
 
         boolean hit = grid[0].shoot(c[0]);
-        grid[0].printGrid();
+        grid[0].printGrid(true);
         if(hit) {
             System.out.println("\nYou hit a ship!");
         } else {

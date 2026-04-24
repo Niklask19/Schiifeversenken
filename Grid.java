@@ -1,57 +1,50 @@
 
 public class Grid {
-    private String[][] grid;
+    private CellState[][] grid;
     private int countShipsOnGridIndex;
 
     public Grid() {
-        this.grid = new String[11][11];
+        this.grid = new CellState[10][10];
         createGrid();
         this.countShipsOnGridIndex = 0;
     }
 
-    public String[][] getGrid() {
+    public CellState[][] getGrid() {
         return grid;
     }
 
     public void createGrid() {
-        int num = 1;
-        char c = 65;
-        grid[0][0] = " ";
 
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid.length; j++) {
 
-                if (i == 0 && j == 0) {
-                    grid[i][j] = " ";
-                    continue;
-                }
-
-                if (i == 0 && j != 0) {
-                    grid[i][j] = Integer.toString(num);
-                    num++;
-                    continue;
-                }
-
-                if (i != 0 && j == 0) {
-                    grid[i][j] = Character.toString(c);
-                    c++;
-                    continue;
-                }
-
-
-                grid[i][j] = "~";
-
+                grid[i][j] = CellState.WATER;
             }
         }
 
     }
 
-    public void printGrid() {
+    public void printGrid(boolean fogOfWar) {
+      char letterRow = 'A';
+        System.out.print("  ");
+        for (int i = 1; i <= 10; i++){
+            System.out.print(i + " ");
+        }
+        System.out.println();
+
         for (int i = 0; i < grid.length; i++) {
+            System.out.print(letterRow + " ");
             for (int j = 0; j < grid.length; j++) {
-                System.out.print(grid[i][j] + " ");
+                CellState state = grid[i][j];
+
+                if (fogOfWar && state == CellState.SHIP) {
+                    System.out.print("~ ");
+                } else {
+                    System.out.print(state.getSymbol() + " ");
+                }
             }
             System.out.println();
+            letterRow++;
         }
     }
 
@@ -64,7 +57,7 @@ public class Grid {
                 int temp = cArray[0].getCol();
                 while (temp >= cArray[1].getCol()) {
 
-                    this.grid[numRow][temp] = "O";
+                    this.grid[numRow][temp] = CellState.SHIP;
 
                     temp--;
                 }
@@ -74,7 +67,7 @@ public class Grid {
                 int temp = cArray[0].getCol();
                 while (temp <= cArray[1].getCol()) {
 
-                    this.grid[numRow][temp] = "O";
+                    this.grid[numRow][temp] = CellState.SHIP;
                     temp++;
                 }
             }
@@ -88,7 +81,7 @@ public class Grid {
                 int count = 0;
                 while (count < cArray[0].getLength(cArray[1])) {
 
-                    this.grid[tempNumRow][numCol] = "O";
+                    this.grid[tempNumRow][numCol] = CellState.SHIP;
                     tempNumRow--;
                     count++;
                 }
@@ -98,7 +91,7 @@ public class Grid {
                 int count = 0;
                 while (count < cArray[0].getLength(cArray[1])) {
 
-                    this.grid[tempNumRow][numCol] = "O";
+                    this.grid[tempNumRow][numCol] = CellState.SHIP;
                     tempNumRow++;
                     count++;
                 }
@@ -116,8 +109,8 @@ public class Grid {
            while(count < ship[Menu.index].getLength()) {
                for(int i = tempRow - 1; i <= tempRow + 1; i++) {
                    for(int j = tempCol - 1; j <= tempCol + 1; j++ ) {
-                       if(i >= 1 && i <= 10 && j >= 1 && j <= 10) {
-                           if(this.grid[i][j].equals("O")) {
+                       if(i >= 0 && i <= 9 && j >= 0 && j <= 9) {
+                           if(this.grid[i][j] == CellState.SHIP) {
                                return false;
                            }
                        }
@@ -138,8 +131,8 @@ public class Grid {
             while(count < ship[Menu.index].getLength()) {
                 for(int i = tempRow - 1; i <= tempRow + 1; i++) {
                     for(int j = tempCol - 1; j <= tempCol + 1; j++ ) {
-                        if(i >= 1 && i <= 10 && j >= 1 && j <= 10) {
-                            if(this.grid[i][j].equals("O")) {
+                        if(i >= 0 && i <= 9 && j >= 0 && j <= 9) {
+                            if(this.grid[i][j] == CellState.SHIP) {
                                 return false;
                             }
                         }
@@ -158,46 +151,46 @@ public class Grid {
         int row = changeLetterToNum(c);
         int col = c.getCol();
 
-        if(this.grid[row][col].equals("O")) {
-            this.grid[row][col] = "X";
+        if(this.grid[row][col] == CellState.SHIP) {
+            this.grid[row][col] = CellState.HIT;
             return true;
         }
 
-        this.grid[row][col] = "M";
+        this.grid[row][col] = CellState.MISS;
         return false;
     }
 
     public static int changeLetterToNum(Coordinates c) {
         if (c.getRow() == 'A') {
-            return 1;
+            return 0;
         }
         if (c.getRow() == 'B') {
-            return 2;
+            return 1;
         }
         if (c.getRow() == 'C') {
-            return 3;
+            return 2;
         }
         if (c.getRow() == 'D') {
-            return 4;
+            return 3;
         }
         if (c.getRow() == 'E') {
-            return 5;
+            return 4;
         }
         if (c.getRow() == 'F') {
-            return 6;
+            return 5;
         }
         if (c.getRow() == 'G') {
-            return 7;
+            return 6;
         }
         if (c.getRow() == 'H') {
-            return 8;
+            return 7;
         }
         if (c.getRow() == 'I') {
-            return 9;
+            return 8;
         }
         if (c.getRow() == 'J') {
-            return 10;
+            return 9;
         }
-        return 0;
+        return 10;
     }
 }

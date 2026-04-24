@@ -6,11 +6,11 @@ public class Menu {
     private static int countForSetShipsMenu = 0;
 
     public static void menu(Coordinates[] coordinatesObjArr, Grid[] gridObjArr, Ships[] shipsObjArr) {
-        gridObjArr[0].printGrid();
+        gridObjArr[0].printGrid(false);
         while (index < 5) {
             System.out.println("Enter the coordinates of the " + returnShipNamesForOutput());
             if (inputMenu(coordinatesObjArr, shipsObjArr, gridObjArr)) {
-                gridObjArr[0].printGrid();
+                gridObjArr[0].printGrid(false);
             }
         }
         Gameplay.gameplay(gridObjArr, coordinatesObjArr);
@@ -62,6 +62,7 @@ public class Menu {
 
         char row1 = array[0].charAt(0);
         int column1 = Integer.parseInt(array[0].substring(1));
+        column1--;
         boolean quit1 = cArray[0].checkCoordinates(row1, column1);
 
         if (!quit1) {
@@ -71,6 +72,7 @@ public class Menu {
         if(twoCoordinates) {
             char row2 = array[1].charAt(0);
             int column2 = Integer.parseInt(array[1].substring(1));
+            column2--;
             boolean quit2 = cArray[1].checkCoordinates(row2, column2);
 
             if (!quit2) {

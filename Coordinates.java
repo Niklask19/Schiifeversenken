@@ -18,7 +18,7 @@ public class Coordinates {
 
     public boolean checkCoordinates(char row, int column) {
 
-        if (column > 10 || column < 1) {
+        if (column > 9 || column < 0) {
             return false;
         }
         String forbiddenLetters = "KLMNOPQRSTUVWXYZ";
