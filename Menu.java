@@ -3,17 +3,16 @@ import java.util.Scanner;
 
 public class Menu {
     protected static int index = 0;
-    private static int countForSetShipsMenu = 0;
 
     public static void menu(Coordinates[] coordinatesObjArr, Grid[] gridObjArr, Ships[] shipsObjArr) {
         gridObjArr[0].printGrid(false);
         while (index < 5) {
-            System.out.println("Enter the coordinates of the " + returnShipNamesForOutput());
+            System.out.println("Enter the coordinates of the " + shipsObjArr[index].getName() + " " + "(" + shipsObjArr[index].getLength() + " cells):");
             if (inputMenu(coordinatesObjArr, shipsObjArr, gridObjArr)) {
                 gridObjArr[0].printGrid(false);
             }
         }
-        Gameplay.gameplay(gridObjArr, coordinatesObjArr);
+        Gameplay.gameplay(gridObjArr, coordinatesObjArr, shipsObjArr);
     }
 
     public static boolean inputMenu(Coordinates[] coordinatesObjArr, Ships[] shipsObjArr, Grid[] gridObjArr) {
@@ -38,8 +37,8 @@ public class Menu {
                 System.out.println("Error! You placed it too close to another one. Try again:");
                 continue;
             }
-            shipsObjArr[index].setCoordinatesIntoShipField(coordinatesObjArr[0].getParts(coordinatesObjArr[1]));
-            gridObjArr[0].placeOnGrid(coordinatesObjArr);
+
+            gridObjArr[0].placeOnGrid(coordinatesObjArr, shipsObjArr[index]);
             index++;
             break;
         }
@@ -85,29 +84,7 @@ public class Menu {
                 return false;
             }
         }
-
-
         return true;
     }
 
-    private static String returnShipNamesForOutput() {
-        countForSetShipsMenu++;
-
-        if (countForSetShipsMenu == 1) {
-            return "Aircraft Carrier (5 cells):";
-        }
-        if (countForSetShipsMenu == 2) {
-            return "Battleship (4 cells):";
-        }
-        if (countForSetShipsMenu == 3) {
-            return "Submarine (3 cells):";
-        }
-        if (countForSetShipsMenu == 4) {
-            return "Cruiser (3 cells):";
-        }
-        if (countForSetShipsMenu == 5) {
-            return "Destroyer (2 cells):";
-        }
-        return null;
-    }
 }

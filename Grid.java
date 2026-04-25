@@ -1,12 +1,11 @@
 
 public class Grid {
     private CellState[][] grid;
-    private int countShipsOnGridIndex;
 
     public Grid() {
         this.grid = new CellState[10][10];
         createGrid();
-        this.countShipsOnGridIndex = 0;
+
     }
 
     public CellState[][] getGrid() {
@@ -48,63 +47,34 @@ public class Grid {
         }
     }
 
-    public void placeOnGrid(Coordinates[] cArray) {
-        int numRow = changeLetterToNum(cArray[0]);
 
-        if (cArray[0].getRow() == cArray[1].getRow()) {
+    public void placeOnGrid(Coordinates[] cArray, Ships currentShip) {
+        int row1 = changeLetterToNum(cArray[0]);
+        int row2 = changeLetterToNum(cArray[1]);
+        int col1 = cArray[0].getCol();
+        int col2 = cArray[1].getCol();
 
-            if (cArray[0].getCol() > cArray[1].getCol()) {
-                int temp = cArray[0].getCol();
-                while (temp >= cArray[1].getCol()) {
+        int minRow = Math.min(row1, row2);
+        int maxRow = Math.max(row1, row2);
+        int minCol = Math.min(col1, col2);
+        int maxCol = Math.max(col1, col2);
 
-                    this.grid[numRow][temp] = CellState.SHIP;
+        for (int i = minRow; i <= maxRow; i++) {
+            for (int j = minCol; j <= maxCol; j++) {
 
-                    temp--;
-                }
-            }
+                this.grid[i][j] = CellState.SHIP;
 
-            if (cArray[0].getCol() < cArray[1].getCol()) {
-                int temp = cArray[0].getCol();
-                while (temp <= cArray[1].getCol()) {
-
-                    this.grid[numRow][temp] = CellState.SHIP;
-                    temp++;
-                }
+                currentShip.setNumCords(i, j);
             }
         }
-
-        if (cArray[0].getCol() == cArray[1].getCol()) {
-            int numCol = cArray[0].getCol();
-            int tempNumRow = numRow;
-
-            if (cArray[0].getRow() > cArray[1].getRow()) {
-                int count = 0;
-                while (count < cArray[0].getLength(cArray[1])) {
-
-                    this.grid[tempNumRow][numCol] = CellState.SHIP;
-                    tempNumRow--;
-                    count++;
-                }
-            }
-
-            if (cArray[0].getRow() < cArray[1].getRow()) {
-                int count = 0;
-                while (count < cArray[0].getLength(cArray[1])) {
-
-                    this.grid[tempNumRow][numCol] = CellState.SHIP;
-                    tempNumRow++;
-                    count++;
-                }
-            }
-        }
-
     }
 
     public boolean checkIfShipNearBy(Coordinates[] cArray, Ships[] ship) {
+        int count = 0;
         if(cArray[0].getRow() == cArray[1].getRow()) {
             int tempRow = changeLetterToNum(cArray[0]);
             int tempCol = Math.min(cArray[0].getCol(), cArray[1].getCol());
-            int count = 0;
+
 
            while(count < ship[Menu.index].getLength()) {
                for(int i = tempRow - 1; i <= tempRow + 1; i++) {
@@ -126,7 +96,7 @@ public class Grid {
             int c1 = changeLetterToNum(cArray[0]);
             int c2 = changeLetterToNum(cArray[1]);
             int tempRow = Math.min(c1,c2);
-            int count = 0;
+
 
             while(count < ship[Menu.index].getLength()) {
                 for(int i = tempRow - 1; i <= tempRow + 1; i++) {

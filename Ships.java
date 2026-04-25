@@ -1,48 +1,51 @@
 public class Ships {
     private String name;
     private final int length;
-    private boolean horizontal;
-    private String[] coordinates;
     private int[][] numCords;
-    private int countIndexForNumCords;
+    private int hits;
+    private int countNumCords;
 
     public Ships(String name, int length) {
         this.name = name;
         this.length = length;
-        this.coordinates = new String[length];
         this.numCords = new int[length][2];
-        this.countIndexForNumCords = 0;
+        this.hits = 0;
+        this.countNumCords = 0;
     }
 
     public int getLength() {
         return length;
     }
 
-    public void setCoordinatesIntoShipField(String coordinates) {
-
-        this.coordinates = coordinates.split(" ");
-    }
-
-    public String[] getCoordinates() {
-        return coordinates;
-    }
-
     public void setNumCords(int x, int y) {
-        this.numCords[this.countIndexForNumCords][0] = x;
-        this.numCords[this.countIndexForNumCords][1] = y;
-        this.countIndexForNumCords++;
+        this.numCords[this.countNumCords][0] = x;
+        this.numCords[this.countNumCords][1] = y;
+        countNumCords++;
     }
 
     public int[][] getNumCords() {
         return numCords;
     }
 
-    public boolean isHorizontal() {
-        return horizontal;
+    public String getName() {
+        return name;
     }
 
-    public void setHorizontal(boolean horizontal) {
-        this.horizontal = horizontal;
+    public int getHits() {
+        return hits;
     }
+
+    public void determineIfShipGotHit(Coordinates c) {
+        int row = Grid.changeLetterToNum(c);
+        int col = c.getCol();
+
+        for (int i = 0; i < this.numCords.length; i++) {
+            if (this.numCords[i][0] == row && this.numCords[i][1] == col) {
+                this.hits++;
+            }
+        }
+    }
+
 }
+
 

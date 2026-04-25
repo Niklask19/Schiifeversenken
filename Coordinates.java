@@ -84,50 +84,6 @@ public class Coordinates {
         return count;
     }
 
-    public String getParts(Coordinates x) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(this.row).append(this.col).append(" ");
-
-        if (this.row == x.row) {
-
-            if (this.col > x.col) {
-                int temp = this.col;
-                while (temp > x.col) {
-                    temp--;
-                    sb.append(this.row).append(temp).append(" ");
-                }
-            }
-
-            if (this.col < x.col) {
-                int temp = this.col;
-                while (temp < x.col) {
-                    temp++;
-                    sb.append(this.row).append(temp).append(" ");
-                }
-            }
-        }
-
-        if (this.col == x.col) {
-
-            if (this.row > x.row) {
-                char temp = this.row;
-                while (temp > x.row) {
-                    temp--;
-                    sb.append(temp).append(this.col).append(" ");
-                }
-            }
-
-            if (this.row < x.row) {
-                char temp = this.row;
-                while (temp < x.row) {
-                    temp++;
-                    sb.append(temp).append(this.col).append(" ");
-                }
-            }
-        }
-        return sb.toString();
-    }
-
     public int getCol() {
         return col;
     }
