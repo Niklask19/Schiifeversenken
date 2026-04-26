@@ -121,7 +121,7 @@ public class Grid {
         int row = changeLetterToNum(c);
         int col = c.getCol();
 
-        if(this.grid[row][col] == CellState.SHIP) {
+        if(this.grid[row][col] == CellState.SHIP || this.grid[row][col] == CellState.HIT) {
             this.grid[row][col] = CellState.HIT;
             return true;
         }
