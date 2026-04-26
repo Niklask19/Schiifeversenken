@@ -1,17 +1,23 @@
 import java.util.Scanner;
 
 public class Gameplay {
-    private static int countSankShips = 0;
-    private static int[] listSankShips = new int[5];
 
     public static void gameplay(Coordinates[] cArray, Player[] playerObjArr) {
         Scanner sc2 = new Scanner(System.in);
         String inputShoot;
-        System.out.println("The game starts!");
-        playerObjArr[0].grid.printGrid(true);
-        System.out.println("Take a shot!");
+        int currentPlayer = 0;
+        int nextPlayer = 1;
 
-        while (countSankShips < 5) {
+        while (true) {
+            playerObjArr[nextPlayer].grid.printGrid(true);
+            System.out.println("---------------------");
+            playerObjArr[currentPlayer].grid.printGrid(false);
+            if (currentPlayer == 0) {
+                System.out.println("Player 1, it's your turn:");
+            } else {
+                System.out.println("Player 2, it's your turn:");
+            }
+
             while (true) {
                 inputShoot = sc2.next();
                 if (!(Menu.splitCoordinates(inputShoot, cArray))) {
@@ -21,42 +27,28 @@ public class Gameplay {
                 break;
             }
 
-            boolean hit = playerObjArr[0].grid.shoot(cArray[0]);
-            playerObjArr[0].grid.printGrid(true);
-            if (hit) {
-                determineWhichShipGotHit(cArray[0], playerObjArr[0].ships);
-                boolean sankShip = checkIfShipGotSank(playerObjArr[0].ships);
-                if(sankShip) {
-                    if(countSankShips != 5) {
-                        System.out.println("You sank a ship! Specify a new target:");
-                    }
+            boolean hit = playerObjArr[nextPlayer].grid.shoot(cArray[0]);
 
+            if (hit) {
+                playerObjArr[nextPlayer].determineWhichShipGotHit(cArray[0]);
+                boolean sankShip = playerObjArr[nextPlayer].checkIfShipGotSank();
+
+                if (playerObjArr[nextPlayer].getCountSankShips() == 5) {
+                    System.out.println("You sank the last ship. You won. Congratulations!");
+                    break;
+                } else if (sankShip) {
+                    System.out.println("You sank a ship!");
                 } else {
-                    System.out.println("You hit a ship! Try again:");
+                    System.out.println("You hit a ship!");
                 }
             } else {
-                System.out.println("You missed! Try again:");
+                System.out.println("You missed!");
             }
+            int temp = currentPlayer;
+            currentPlayer = nextPlayer;
+            nextPlayer = temp;
+
+            Menu.changePlayersAndClearScreen();
         }
-        System.out.println("You sank the last ship. You won. Congratulations!");
-    }
-
-
-    public static void determineWhichShipGotHit(Coordinates c, Ships[] ship) {
-        for (int i = 0; i < ship.length; i++) {
-            ship[i].determineIfShipGotHit(c);
-        }
-    }
-
-    public static boolean checkIfShipGotSank(Ships[] ship) {
-
-        for (int i = 0; i < ship.length; i++) {
-            if (ship[i].getLength() == ship[i].getHits() && listSankShips[i] == 0) {
-                listSankShips[i] = 1;
-                countSankShips++;
-                return true;
-            }
-        }
-        return false;
     }
 }

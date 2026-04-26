@@ -17,6 +17,8 @@ public class Menu {
                     playerObjArr[playerIndex].grid.printGrid(false);
                 }
             }
+            playerIndex++;
+            playersName++;
             changePlayersAndClearScreen();
         }
 
@@ -96,8 +98,6 @@ public class Menu {
     }
 
     public static void changePlayersAndClearScreen() {
-        playerIndex++;
-        playersName++;
 
         Scanner s = new Scanner(System.in);
         System.out.println("Press Enter and pass the move to another player");
