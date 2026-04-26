@@ -69,14 +69,14 @@ public class Grid {
         }
     }
 
-    public boolean checkIfShipNearBy(Coordinates[] cArray, Ships[] ship) {
+    public boolean checkIfShipNearBy(Coordinates[] cArray, Player player) {
         int count = 0;
         if(cArray[0].getRow() == cArray[1].getRow()) {
             int tempRow = changeLetterToNum(cArray[0]);
             int tempCol = Math.min(cArray[0].getCol(), cArray[1].getCol());
 
 
-           while(count < ship[Menu.index].getLength()) {
+           while(count < player.ships[player.getIndexForMenu()].getLength()) {
                for(int i = tempRow - 1; i <= tempRow + 1; i++) {
                    for(int j = tempCol - 1; j <= tempCol + 1; j++ ) {
                        if(i >= 0 && i <= 9 && j >= 0 && j <= 9) {
@@ -98,7 +98,7 @@ public class Grid {
             int tempRow = Math.min(c1,c2);
 
 
-            while(count < ship[Menu.index].getLength()) {
+            while(count < player.ships[player.getIndexForMenu()].getLength()) {
                 for(int i = tempRow - 1; i <= tempRow + 1; i++) {
                     for(int j = tempCol - 1; j <= tempCol + 1; j++ ) {
                         if(i >= 0 && i <= 9 && j >= 0 && j <= 9) {

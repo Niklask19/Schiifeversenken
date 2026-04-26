@@ -4,11 +4,11 @@ public class Gameplay {
     private static int countSankShips = 0;
     private static int[] listSankShips = new int[5];
 
-    public static void gameplay(Grid[] grid, Coordinates[] cArray, Ships[] ships) {
+    public static void gameplay(Coordinates[] cArray, Player[] playerObjArr) {
         Scanner sc2 = new Scanner(System.in);
         String inputShoot;
         System.out.println("The game starts!");
-        grid[0].printGrid(true);
+        playerObjArr[0].grid.printGrid(true);
         System.out.println("Take a shot!");
 
         while (countSankShips < 5) {
@@ -21,11 +21,11 @@ public class Gameplay {
                 break;
             }
 
-            boolean hit = grid[0].shoot(cArray[0]);
-            grid[0].printGrid(true);
+            boolean hit = playerObjArr[0].grid.shoot(cArray[0]);
+            playerObjArr[0].grid.printGrid(true);
             if (hit) {
-                determineWhichShipGotHit(cArray[0], ships);
-                boolean sankShip = checkIfShipGotSank(ships);
+                determineWhichShipGotHit(cArray[0], playerObjArr[0].ships);
+                boolean sankShip = checkIfShipGotSank(playerObjArr[0].ships);
                 if(sankShip) {
                     if(countSankShips != 5) {
                         System.out.println("You sank a ship! Specify a new target:");
