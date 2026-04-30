@@ -102,9 +102,20 @@ public class Menu {
         Scanner s = new Scanner(System.in);
         System.out.println("Press Enter and pass the move to another player");
         s.nextLine();
+        try {
+            System.out.print("Cleaning screen in 3...");
+            Thread.sleep(1000);
+            System.out.print(" 2...");
+            Thread.sleep(1000);
+            System.out.println(" 1...");
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
         for (int i = 0; i < 50; i++) {
             System.out.println();
         }
+
 
     }
 }

@@ -49,6 +49,7 @@ public class Gameplay {
             nextPlayer = temp;
 
             Menu.changePlayersAndClearScreen();
+
         }
     }
 }
